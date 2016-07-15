@@ -202,5 +202,4 @@ class LinkedListTestCase(unittest.TestCase):
         mylist = LinkedList([1,2,3])
         with self.assertRaises(IndexError):
             invalidindex = mylist.__getitem__(5)
-            self.assertEqual(my_list, LinkedList())
     #coverate 96%
