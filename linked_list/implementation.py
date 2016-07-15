@@ -20,7 +20,6 @@ class LinkedList(AbstractLinkedList):
         for item in self:
             element = item.elem
             result.append(element)
-        print str(result)
         return str(result)
 
     def __len__(self):
@@ -80,7 +79,6 @@ class LinkedList(AbstractLinkedList):
         else:
             self.end.next = aux
             self.end = aux
-        print self
         return self
         
         # my_list = linkedlist() -> .append(1)
@@ -95,14 +93,16 @@ class LinkedList(AbstractLinkedList):
     def pop(self, index=None):
         if len(self) == 0:
             raise IndexError
+        if index is None:
+            index = len(self)-1
         if index > (len(self)-1):
             raise IndexError
-        if len(self) ==1:
+        if len(self) == 1:
             pop = self.start.elem
             self.start = None
             self.end = None
             return pop
-        if index is None or index == (len(self)-1):
+        if index == (len(self)-1):
             for i, node in enumerate(self): # [1,2,3] --pop--> [1,2] and 3
                 if i is (len(self)-2): #go to second last element
                     pop = node.next 
@@ -118,4 +118,3 @@ class LinkedList(AbstractLinkedList):
                 pop = node.next
                 node.next = node.next.next                #node.next.next.next.next.next.next.next.next.next.next.next.next
                 return pop.elem
-        
