@@ -33,7 +33,12 @@ class LinkedList(AbstractLinkedList):
         raise StopIteration
 
     def __getitem__(self, index):
-        pass
+        if index > len(self):
+            raise IndexError('index out of range')
+        for i, node in enumerate(self):
+            if i == index:
+                return node
+            
 
     def __add__(self, other):
         nonmutated = self.__class__() # new object(elements from old list) --> append to new object [1,2,3,4]
