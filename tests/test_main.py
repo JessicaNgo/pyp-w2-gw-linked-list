@@ -181,7 +181,7 @@ class LinkedListTestCase(unittest.TestCase):
         my_list = LinkedList()
         my_list += LinkedList()
         self.assertEqual(my_list.count(), 0)
-<<<<<<< HEAD
+        
         self.assertEqual(my_list, LinkedList())
     def test_not_equals_list(self):
         
@@ -202,7 +202,5 @@ class LinkedListTestCase(unittest.TestCase):
         mylist = LinkedList([1,2,3])
         with self.assertRaises(IndexError):
             invalidindex = mylist.__getitem__(5)
+            self.assertEqual(my_list, LinkedList())
     #coverate 96%
-=======
-        self.assertEqual(my_list, LinkedList())
->>>>>>> 2f4b899d9c264bd7a3f9b3aad455caf6934f3a73
