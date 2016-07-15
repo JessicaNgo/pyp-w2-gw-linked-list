@@ -1,5 +1,5 @@
 from .interface import AbstractLinkedList
-from .node import Node
+from linked_list.node import Node
 
 
 class LinkedList(AbstractLinkedList):
@@ -7,90 +7,114 @@ class LinkedList(AbstractLinkedList):
     Implementation of an AbstractLinkedList inteface.
     """
 
-
     def __init__(self, elements=None):
         self.start = None
-        self.end = None
-        # self.next = None
-        # if elements:
-        #     for elem in elements:
+        self.end = None 
+        
         if elements:
-            for elem in elements:
-                self.append(elem)
-                    
+            for element in elements:
+                self.append(element)
+
     def __str__(self):
-        pass
+        result = []
+        for item in self:
+            element = item.elem
+            result.append(element)
+        return str(result)
 
     def __len__(self):
-        aux = self.start
-        count = 0
-        while aux.next != None:
-            count += 1
-            
-        return count
+        return self.count()
 
     def __iter__(self):
-        # return iter(self.list)
-        pass
+        aux_travel = self.start
+        while aux_travel: #while aux_travel is not/make!=) None, but at the last node
+            yield aux_travel
+            aux_travel = aux_travel.next
+        raise StopIteration
 
     def __getitem__(self, index):
-        # return self.list[index]
         pass
 
     def __add__(self, other):
-        # would it be while other.list.next != none:
-            #self.list.
-            #append()
-        # while self.list.next != None:
-        #     self.list.next()
-        # self.list.next = other.start
-        #not sure what to put here]
-        #we're supposed to use nodes?
-        pass
-
+        nonmutated = self.__class__() # new object(elements from old list) --> append to new object [1,2,3,4]
+        for node in self:
+            nonmutated.append(node.elem)
+        for node in other:
+            element = node.elem
+            nonmutated.append(element)
+        return nonmutated
+        
+        
     def __iadd__(self, other):
-        pass
+        for node in other:
+            self.append(node.elem)
+            
+        return self
 
     def __eq__(self, other):
-        # Assign dummies for both start nodes
-        aux_s = self.start
-        aux_o = other.start
         
-        # To be equal, they must have same count and same elem
-        # in each place
-        # Assume True and test both criteria
-        equal = True
+        if len(self) == len(other):
+            other_node = other.start
+            for item in self:
+                #print item, other_node.elem WHY YOU NO PYTHON 3
+                if item.elem != other_node.elem:
+                    return False
+                other_node = other_node.next
+            return True
+        return False
         
-        if self.count() != other.count():
-            equal = False
-            
-        while aux_s != None and aux_o != None:
-            if aux_s != aux_o:
-                equal = False
-                
-        return equal
+    def __ne__(self, other):
+        # if self == other:
+        #     return False
+        # return True
+        return not self == other 
 
     def append(self, elem):
-        if self.start == None:
-            self.start = Node(elem)
-            self.end = self.start
+        
+        aux = Node(elem)
+        
+        if self.start is None:
+            self.start = aux
+            self.end = aux
         else:
-            aux = Node(elem)
             self.end.next = aux
             self.end = aux
-
-    def count(self):
-        # Start at 
-        count = 0
-        if self.start:
-            count = 1
-            aux = self.start
-            while aux.next != None:
-                count += 1
-                aux = aux.next
-        return count
+        return self
         
+        # my_list = linkedlist() -> .append(1)
+        # 2nd_list = linkedlist([1])
+    def count(self):
+        count = 0
+        for item in self:
+            count += 1
+        return count
+
 
     def pop(self, index=None):
-        #pop remo
-        return self.list.pop(index)
+        if len(self) == 0:
+            raise IndexError
+        if index is None:
+            index = len(self)-1
+        if index > (len(self)-1):
+            raise IndexError
+        if len(self) == 1:
+            pop = self.start.elem
+            self.start = None
+            self.end = None
+            return pop
+        if index == (len(self)-1):
+            for i, node in enumerate(self): # [1,2,3] --pop--> [1,2] and 3
+                if i is (len(self)-2): #go to second last element
+                    pop = node.next 
+                    node.next = None    #set next  = None
+                    self.end = node     #set end pointer to node 
+                    return pop.elem
+        if index == 0:
+            travel_node = self.start
+            self.start = travel_node.next
+            return travel_node.elem
+        for i, node in enumerate(self):
+            if i == (index-1): #[1, 2, 3, 4]
+                pop = node.next
+                node.next = node.next.next                #node.next.next.next.next.next.next.next.next.next.next.next.next
+                return pop.elem

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from linked_list.Node import Node
-from linked_list.Node import LinkedList
-#it's a directory
+from linked_list import Node, LinkedList
+
 
 class LinkedListTestCase(unittest.TestCase):
 
