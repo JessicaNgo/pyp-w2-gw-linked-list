@@ -37,7 +37,7 @@ class LinkedList(AbstractLinkedList):
             raise IndexError('index out of range')
         for i, node in enumerate(self):
             if i == index:
-                return node
+                return node.elem
             
 
     def __add__(self, other):
